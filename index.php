@@ -16,8 +16,9 @@ class Alumno {
     public $mate_alum;
     public $fisica_alum;
     public $prog_alum;
-    public $aprobadas;
-
+    public $aprobadoMate;
+    public $aprobadoFisica;
+    public $aprobadoProg;
     public function __construct($cedula,$nombre,$nota_mate, $nota_fisica, $nota_prog){ 
       $this->cedula_alum = $cedula;
       $this->nombre_alum = $nombre;
@@ -40,11 +41,25 @@ class Alumno {
     public function getProg(){
         return $this->prog_alum; 
       }  
-    public function getAprobadas(){
-        return $this->aprobadas; 
+    public function getAprobMate(){
+        return $this->aprobadoMate; 
       }  
-    public function setAprobadas($int){
-      $this->aprobadas += $int;
+
+      public function getAprobFisica(){
+        return $this->aprobadoFisica; 
+      }  
+
+      public function getAprobProg(){
+        return $this->aprobadoProg; 
+      }  
+    public function setAprobMate(){
+      $this->aprobadoMate = 1;
+    }
+    public function setAprobFisica(){
+      $this->aprobadoFisica = 1;
+    }
+    public function setAprobProg(){
+      $this->aprobadoProg = 1;
     }
   }
   
@@ -254,14 +269,15 @@ class Alumno {
 
         if($alumno->getMate() > 9){
           $cantAprobMate += 1;
-          $alumno->setAprobadas(1);
+          $alumno->setAprobMate();
+
         }else{
           $cantReprobMate += 1;
         }
 
         if($alumno->getFisica() > 9){
           $cantAprobFisica += 1;
-          $alumno->setAprobadas(1);
+          $alumno->setAprobFisica();
 
         }else{
           $cantReprobFisica += 1;
@@ -269,7 +285,7 @@ class Alumno {
 
         if($alumno->getProg() > 9){
           $cantAprobProg += 1;
-          $alumno->setAprobadas(1);
+          $alumno->setAprobProg();
 
         }else{
           $cantReprobProg += 1;
@@ -364,16 +380,18 @@ class Alumno {
       $maxFisica = 0;
       $maxProg = 0;
 
-      foreach($arrayAlum as $alumno){ 
-        if($alumno->getAprobadas() == 3){
+      
+      foreach($arrayAlum as $alumno){
+        if(($alumno->getAprobProg() + $alumno->getAprobFisica() + $alumno->getAprobMate()) == 3){
           $cantTodas += 1;
         }
-        if($alumno->getAprobadas() == 2){
+        if(($alumno->getAprobProg() + $alumno->getAprobFisica() + $alumno->getAprobMate()) == 2){
           $cantdos += 1;
         }
-        if($alumno->getAprobadas() == 1){
+        if(($alumno->getAprobProg() + $alumno->getAprobFisica() + $alumno->getAprobMate()) == 1){
           $cantuna += 1;
         }
+
 
         if($alumno->getMate() > $maxMate){
           $maxMate = $alumno->getMate();
@@ -389,7 +407,6 @@ class Alumno {
 
        
       }
-
       echo "<td>";
       echo $cantTodas;
       echo "</td>";
@@ -414,6 +431,7 @@ class Alumno {
       echo $maxProg;
       echo "</td>";
   
+      
       ?>
 
     </tr>
